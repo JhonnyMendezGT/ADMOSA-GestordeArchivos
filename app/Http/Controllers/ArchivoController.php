@@ -28,13 +28,13 @@ class ArchivoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'archivo' => ['required', 'file', 'max:10240', 'mimes:pdf,jpg,jpeg,png,txt,docx,xlsx,pptx'],
+            'archivo' => ['required', 'file', 'max:10240', 'mimes:pdf,jpg,jpeg,png,txt,json,docx,xlsx,pptx,zip,rar'],
         ], [
             'archivo.required' => 'Selecciona un archivo para subir.',
             'archivo.file'     => 'Lo que seleccionaste no es un archivo válido.',
             'archivo.uploaded' => 'No se pudo subir el archivo. Puede superar el tamaño máximo de 10 MB.',
             'archivo.max'      => 'El archivo es demasiado grande. El tamaño máximo es 10 MB.',
-            'archivo.mimes'    => 'Tipo de archivo no permitido. Solo se aceptan: PDF, JPG, JPEG, PNG, TXT, DOCX, XLSX y PPTX.',
+            'archivo.mimes'    => 'Tipo de archivo no permitido. Solo se aceptan: PDF, JPG, JPEG, PNG, TXT, JSON, DOCX, XLSX, PPTX, ZIP y RAR.',
         ]);
 
         $archivo = $request->file('archivo');

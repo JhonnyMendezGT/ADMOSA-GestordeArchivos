@@ -76,7 +76,7 @@
             <p class="text-sm font-medium text-zinc-700">
                 Arrastra un archivo aquí o <span class="underline underline-offset-4">haz clic para elegir</span>
             </p>
-            <p class="mt-1 text-xs text-zinc-500">PDF, JPG, PNG, TXT, DOCX, XLSX o PPTX · Máximo 10 MB</p>
+           <p class="mt-1 text-xs text-zinc-500">PDF, imágenes, TXT, JSON, Office, ZIP o RAR · Máximo 10 MB</p>
 
             <p id="nombre-archivo" class="mt-3 text-sm font-medium text-zinc-900"></p>
             <p id="aviso-archivo" class="mt-1 text-sm text-red-600"></p>
@@ -111,6 +111,8 @@
                     'DOCX'             => 'bg-blue-50 text-blue-600',
                     'XLSX'             => 'bg-emerald-50 text-emerald-600',
                     'PPTX'             => 'bg-orange-50 text-orange-600',
+                    'ZIP', 'RAR'       => 'bg-amber-50 text-amber-600',
+                    'JSON'             => 'bg-sky-50 text-sky-600',
                     default            => 'bg-zinc-100 text-zinc-600',
                 };
             @endphp
@@ -136,7 +138,7 @@
                 {{-- Acciones --}}
                 <div class="flex shrink-0 items-center gap-1">
                     <a href="{{ route('archivos.abrir', $archivo) }}" target="_blank" title="Abrir" aria-label="Abrir"
-                       class="rounded-lg p-2 text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900">
+                       class="rounded-lg p-2 text-blue-500 transition hover:bg-zinc-100 hover:text-blue-900">
                         <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -144,23 +146,24 @@
                     </a>
 
                     <a href="{{ route('archivos.descargar', $archivo) }}" title="Descargar" aria-label="Descargar"
-                       class="rounded-lg p-2 text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-900">
+                       class="rounded-lg p-2 text-green-500 transition hover:bg-zinc-100 hover:text-green-600">
                         <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                         </svg>
                     </a>
 
-                    <form method="POST" action="{{ route('archivos.eliminar', $archivo) }}"
-                          onsubmit="return confirm('¿Seguro que quieres eliminar este archivo? No se puede deshacer.');">
+                    
                         @csrf
                         @method('DELETE')
                         <button type="submit" title="Eliminar" aria-label="Eliminar"
-                                class="rounded-lg p-2 text-zinc-500 transition hover:bg-red-50 hover:text-red-600">
+                                data-eliminar="{{ route('archivos.eliminar', $archivo) }}"
+                                data-nombre="{{ $archivo->nombre_original }}"
+                                class="rounded-lg p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600">
                             <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                             </svg>
                         </button>
-                    </form>
+                    
                 </div>
             </div>
         @empty
@@ -172,6 +175,36 @@
     </div>
 </main>
 
+<dialog id="modal-eliminar"
+        class="m-auto w-full max-w-sm rounded-2xl border border-zinc-200 bg-white p-0 shadow-xl backdrop:bg-zinc-900/40">
+    <div class="p-6">
+        <div class="mb-4 flex size-11 items-center justify-center rounded-full bg-red-50 text-red-600">
+            <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+            </svg>
+        </div>
+
+        <h3 class="text-lg font-semibold tracking-tight">¿Eliminar archivo?</h3>
+        <p class="mt-1 text-sm text-zinc-500">
+            Vas a eliminar <span id="modal-nombre" class="break-all font-medium text-zinc-900"></span>.
+            Esta acción no se puede deshacer.
+        </p>
+
+        <form id="form-eliminar" method="POST" class="mt-6 flex justify-end gap-2">
+            @csrf
+            @method('DELETE')
+            <button type="button" id="modal-cancelar"
+                    class="rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50">
+                Cancelar
+            </button>
+            <button type="submit"
+                    class="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700">
+                Sí, eliminar
+            </button>
+        </form>
+    </div>
+</dialog>
+
 <script>
 (function () {
     const zona    = document.getElementById('zona');
@@ -180,7 +213,7 @@
     const nombre  = document.getElementById('nombre-archivo');
     const aviso   = document.getElementById('aviso-archivo');
 
-    const permitidas = ['pdf', 'jpg', 'jpeg', 'png', 'txt', 'docx', 'xlsx', 'pptx'];
+    const permitidas = ['pdf', 'jpg', 'jpeg', 'png', 'txt', 'json', 'docx', 'xlsx', 'pptx', 'zip', 'rar'];
     const MAXIMO = 10 * 1024 * 1024; // 10 MB en bytes
 
     // Revisa el archivo elegido y habilita o no el botón
@@ -199,7 +232,7 @@
         const ext = f.name.split('.').pop().toLowerCase();
 
         if (!permitidas.includes(ext)) {
-            aviso.textContent = 'Tipo de archivo no permitido. Solo se aceptan: PDF, JPG, JPEG, PNG, TXT, DOCX, XLSX y PPTX.';
+            aviso.textContent = 'Tipo de archivo no permitido. Solo se aceptan: PDF, JPG, JPEG, PNG, TXT, JSON, DOCX, XLSX, PPTX, ZIP y RAR.';
             boton.disabled = true;
             return;
         }
@@ -239,6 +272,27 @@
     });
 
     revisar();
+        // ----- Ventana de confirmación para eliminar -----
+    const modal        = document.getElementById('modal-eliminar');
+    const formEliminar = document.getElementById('form-eliminar');
+    const modalNombre  = document.getElementById('modal-nombre');
+
+    document.querySelectorAll('[data-eliminar]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            formEliminar.action     = btn.dataset.eliminar;  // a qué archivo apunta
+            modalNombre.textContent = btn.dataset.nombre;    // lo muestra en el texto
+            modal.showModal();                               // abre la ventana
+        });
+    });
+
+    document.getElementById('modal-cancelar').addEventListener('click', function () {
+        modal.close();
+    });
+
+    // Clic en el fondo oscuro = cerrar
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) modal.close();
+    });
 })();
 </script>
 

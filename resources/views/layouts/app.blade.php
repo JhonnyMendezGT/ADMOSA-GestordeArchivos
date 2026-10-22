@@ -21,6 +21,21 @@
         .enlace a { color: #2563eb; }
         .exito-grande { text-align: center; }
         .exito-grande h1 { color: #166534; }
+        .caja-ancha { max-width: 900px; }
+        .encabezado { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .encabezado form { margin: 0; }
+        .btn-chico { display: inline-block; width: auto; margin: 0; padding: 6px 10px; font-size: 13px; color: #fff; background: #2563eb; border: 0; border-radius: 4px; text-decoration: none; cursor: pointer; }
+        .btn-chico:hover { background: #1d4ed8; }
+        .btn-rojo { background: #dc2626; }
+        .btn-rojo:hover { background: #b91c1c; }
+        .btn-gris { background: #6b7280; }
+        .btn-gris:hover { background: #4b5563; }
+        form.en-linea { display: inline; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f9fafb; }
+        .vacio { text-align: center; color: #6b7280; padding: 20px; }
+        .subida { background: #f9fafb; padding: 16px; border-radius: 6px; margin: 16px 0; }
     </style>
 </head>
 <body>

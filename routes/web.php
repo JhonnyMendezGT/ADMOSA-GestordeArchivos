@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,12 @@ Route::middleware('guest')->group(function () {
 
 // Rutas para quien SÍ ha iniciado sesión
 Route::middleware('auth')->group(function () {
-    Route::get('/panel', function () {
-        return view('panel');
-    })->name('panel');
+        Route::get('/panel', [ArchivoController::class, 'index'])->name('panel');
+        Route::post('/archivos', [ArchivoController::class, 'store'])->name('archivos.subir');
+        Route::get('/archivos/{archivo}', [ArchivoController::class, 'show'])->name('archivos.abrir');
+        Route::get('/archivos/{archivo}/descargar', [ArchivoController::class, 'download'])->name('archivos.descargar');
+        Route::delete('/archivos/{archivo}', [ArchivoController::class, 'destroy'])->name('archivos.eliminar');
+        
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

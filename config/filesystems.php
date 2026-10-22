@@ -29,7 +29,12 @@ return [
     */
 
     'disks' => [
-
+        'archivos' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/archivos_usuarios'),
+            'visibility' => 'private',
+            'throw'      => false,
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

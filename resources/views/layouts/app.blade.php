@@ -14,6 +14,13 @@
         button:hover { background: #1d4ed8; }
         .error { background: #fee2e2; color: #991b1b; padding: 10px; border-radius: 4px; margin-bottom: 10px; font-size: 14px; }
         .exito { background: #dcfce7; color: #166534; padding: 10px; border-radius: 4px; margin-bottom: 10px; font-size: 14px; }
+        .req { color: #dc2626; }
+        .boton { display: block; text-align: center; margin-top: 20px; padding: 10px; background: #2563eb; color: #fff; border-radius: 4px; font-size: 15px; text-decoration: none; }
+        .boton:hover { background: #1d4ed8; }
+        .enlace { text-align: center; margin-top: 16px; font-size: 14px; }
+        .enlace a { color: #2563eb; }
+        .exito-grande { text-align: center; }
+        .exito-grande h1 { color: #166534; }
     </style>
 </head>
 <body>

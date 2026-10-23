@@ -8,7 +8,7 @@ class Archivo extends Model
 {
     protected $table = 'tb_archivos';
 
-    // Nuestra tabla usa 'fecha_creacion' y no created_at/updated_at
+    // Nuestra tabla usa 'fecha_creacion'
     public $timestamps = false;
 
     protected $fillable = [
@@ -27,7 +27,7 @@ class Archivo extends Model
         ];
     }
 
-    // En las URLs se usa el UUID y no el ID numérico (imposible de adivinar)
+    // Funcion para que en la url se use el UUID y no el id numerico
     public function getRouteKeyName(): string
     {
         return 'uuid';
@@ -38,7 +38,7 @@ class Archivo extends Model
         return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
         
     }
-        // Devuelve el tamaño en formato legible: "850 B", "12.5 KB", "3.2 MB"
+        // Devuelve el peso en la vista
     public function getPesoLegibleAttribute(): string
     {
         $bytes = (int) $this->peso;

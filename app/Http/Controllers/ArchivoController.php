@@ -10,10 +10,10 @@ use Illuminate\Support\Str;
 
 class ArchivoController extends Controller
 {
-    // Disco donde se guardan los archivos (definido en config/filesystems.php)
+    // DISCO DONDE SE GUARDA LOS ARCHIVOS (definido en config/filesystems.php)
     private const DISCO = 'archivos';
 
-    // Lista SOLO los archivos del usuario con sesión iniciada
+    // FUNCION QUE LISTA LOS ARCHIVOS DEL USUARIO CON SESION INICIADA
     public function index(Request $request)
     {
         $archivos = $request->user()
@@ -24,7 +24,7 @@ class ArchivoController extends Controller
         return view('panel', compact('archivos'));
     }
 
-    // Sube un archivo
+    // FUNCION SUBIR ARCHIVO Y VALIDACIONES DE PESO, CON EXTENSIONES
     public function store(Request $request)
     {
         $request->validate([
@@ -40,7 +40,7 @@ class ArchivoController extends Controller
         $archivo = $request->file('archivo');
         $usuario = $request->user();
 
-        // Se guarda en el disco con nombre aleatorio, dentro de una carpeta por usuario
+        // SE GUARDA EL ARCHIVO CON NOMBRE DIFERENTE EN LA CARPETA DEL USUARIO
         $ruta = $archivo->store((string) $usuario->id_usuario, self::DISCO);
 
         Archivo::create([
@@ -55,7 +55,7 @@ class ArchivoController extends Controller
         return back()->with('exito', 'Archivo subido correctamente.');
     }
 
-    // Abre el archivo en el navegador
+    // FUNCION ABRIR ARCHIVO
     public function show(Archivo $archivo)
     {
         Gate::authorize('view', $archivo);
@@ -72,7 +72,7 @@ class ArchivoController extends Controller
         ]);
     }
 
-    // Descarga el archivo con su nombre original
+    // FUNCION DESCARGAR ARCHIVO CON SU NOMBRE
     public function download(Archivo $archivo)
     {
         Gate::authorize('view', $archivo);
@@ -86,7 +86,7 @@ class ArchivoController extends Controller
         return $disco->download($archivo->ruta_archivo, $archivo->nombre_original);
     }
 
-    // Elimina el archivo (del disco y de la base de datos)
+    // FUNCION PARA ELMINAR EL ARCHIVO EN DISCO Y BD
     public function destroy(Archivo $archivo)
     {
         Gate::authorize('delete', $archivo);

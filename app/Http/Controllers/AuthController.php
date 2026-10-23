@@ -58,8 +58,7 @@ class AuthController extends Controller
 
         // Auth::attempt busca el usuario por correo y compara la contraseña con el hash
         if (Auth::attempt($credenciales)) {
-            // Por seguridad, se crea una sesión nueva al entrar
-            $request->session()->regenerate();
+            $request->session()->regenerate();// Por seguridad, se crea una sesión nueva al entrar
             return redirect()->intended(route('panel'));
         }
 

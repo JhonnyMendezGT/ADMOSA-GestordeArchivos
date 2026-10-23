@@ -8,13 +8,13 @@ use Illuminate\Auth\Access\Response;
 
 class ArchivoPolicy
 {
-    // ¿Puede ver/abrir/descargar este archivo?
+    // Funcion para realizar la pregunta ¿Puede ver/abrir/descargar este archivo?
     public function view(User $user, Archivo $archivo): Response
     {
         return $this->esDueno($user, $archivo);
     }
 
-    // ¿Puede eliminar este archivo?
+    // Funcion para realizar la pregunta ¿Puede eliminar este archivo?
     public function delete(User $user, Archivo $archivo): Response
     {
         return $this->esDueno($user, $archivo);

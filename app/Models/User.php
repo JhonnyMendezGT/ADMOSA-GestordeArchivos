@@ -9,11 +9,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    // Le decimos a Laravel cómo se llama nuestra tabla y su llave primaria
+    // Nombre de la traba y la PK
     protected $table = 'tb_usuarios';
     protected $primaryKey = 'id_usuario';
 
-    // Campos que se pueden llenar al crear un usuario
+    // Campos para crear usuario
     protected $fillable = [
         'nombre',
         'apellido',
@@ -27,7 +27,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // 'hashed' hace que la contraseña se cifre sola al guardarla
+    // Funcion hashed - Contrasña al guardar
     protected function casts(): array
     {
         return [
@@ -35,7 +35,7 @@ class User extends Authenticatable
         ];
     }
 
-    // Relación: un usuario tiene muchos archivos (la usaremos en el Paso 5)
+    // Relación: un usuario tiene muchos archivos
     public function archivos()
     {
         return $this->hasMany(Archivo::class, 'id_usuario', 'id_usuario');

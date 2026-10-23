@@ -22,14 +22,9 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Lifetime
+    | Session Lifetime - aqui ajusto el tiempo de la sesion activa y que pasa cuando cierro el navegador.
     |--------------------------------------------------------------------------
-    |
-    | Here you may specify the number of minutes that you wish the session
-    | to be allowed to remain idle before it expires. If you want them
-    | to expire immediately when the browser is closed then you may
-    | indicate that via the expire_on_close configuration option.
-    |
+   
     */
 
     'lifetime' => (int) env('SESSION_LIFETIME', 120),

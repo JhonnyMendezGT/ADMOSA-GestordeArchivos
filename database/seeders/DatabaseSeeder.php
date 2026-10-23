@@ -3,23 +3,20 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $usuarios = [
+            ['nombre' => 'Usuario', 'apellido' => 'Uno',  'correo' => 'usuario1@prueba.com', 'password' => 'Prueba1234'],
+            ['nombre' => 'Usuario', 'apellido' => 'Dos',  'correo' => 'usuario2@prueba.com', 'password' => 'Prueba1234'],
+        ];
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        foreach ($usuarios as $datos) {
+            // Si el correo ya existe, no lo duplica
+            User::firstOrCreate(['correo' => $datos['correo']], $datos);
+        }
     }
 }

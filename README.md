@@ -7,10 +7,10 @@ Antes de comenzar el desarrollo de la aplicación desde cero, se realizó un an�
 
 [Consultar análisis del proyecto](Analisis.md)
 
-## Estructua del Proyecto
+## Estructura del Proyecto
 Se documenta la estructura de directorios y archivos del proyecto, describiendo las principales clases y funciones implementadas, así como el recorrido del Modelo-Vista-Controlador (MVC) por cada funcionalidad, explicando cómo interactúan sus componentes durante la ejecución de la aplicación.
 
-[Consultar análisis del proyecto](Estructura.md)
+[Consultar estructura del proyecto](Estructura.md)
 
 ## Requisitos previos
 

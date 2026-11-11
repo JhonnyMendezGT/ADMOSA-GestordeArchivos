@@ -18,7 +18,7 @@ Como resultado del análisis se elaboraron **diagramas de flujo**, que permiten 
 ![Panel Princial](docs/Panel.png)
 ![Carga de Archivos](docs/carga.png)
 ![Ver Archivos](docs/verarchivos.png)
-![Descargar Archivos](docs/Descargar.png)
+![Descargar Archivos](docs/descargar.png)
 ![Eliminar Archivos](docs/Eliminar.png)
 
 ### 1.3 ¿Por qué se hicieron antes de programar?
